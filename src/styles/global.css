@@ -1,0 +1,315 @@
+/* =============================================
+   LA BELLE PÂTISSERIE — GLOBAL STYLES
+============================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #FDF6EC;
+  --cream-dark: #F5E8D3;
+  --rose: #D4848A;
+  --rose-light: #E8B4B8;
+  --rose-deep: #B5565C;
+  --mahogany: #3B1A14;
+  --mahogany-mid: #6B3328;
+  --gold: #C9A84C;
+  --gold-light: #E8CC7A;
+  --warm-white: #FEFAF5;
+  --text-dark: #2A1208;
+  --text-mid: #6B4C3B;
+  --text-light: #9B7A6A;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Jost', sans-serif;
+
+  --shadow-soft: 0 4px 24px rgba(59,26,20,0.10);
+  --shadow-card: 0 8px 40px rgba(59,26,20,0.14);
+  --shadow-hover: 0 16px 56px rgba(59,26,20,0.22);
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius: 2px;
+  --radius-lg: 6px;
+}
+
+/* ── Native smooth scroll — no JS override needed ── */
+html {
+  font-size: 16px;
+  /* Firefox hide scrollbar */
+  scrollbar-width: none;
+  /* Let the browser handle scroll physics natively */
+  scroll-behavior: smooth;
+}
+
+/* Chrome/Safari hide scrollbar */
+html::-webkit-scrollbar { display: none; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text-dark);
+  line-height: 1.7;
+  overflow-x: hidden;
+  /* IE/Edge hide scrollbar */
+  -ms-overflow-style: none;
+  /* iOS rubber-band momentum */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent subpixel jitter on the body layer */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Selection ── */
+::selection { background: var(--rose-light); color: var(--mahogany); }
+
+/* ── Typography ── */
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.2; }
+p { font-family: var(--font-body); font-weight: 300; }
+
+/* ── Utility ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 6rem 0; }
+
+/* ══════════════════════════════════════════
+   BUTTONS — fixed for all themes
+══════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.9rem 2.2rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.3s cubic-bezier(0.4,0,0.2,1),
+              background 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Shimmer sweep on hover */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.18) 50%, transparent 80%);
+  transform: skewX(-20deg);
+  transition: left 0.55s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.btn:hover::before { left: 160%; }
+
+/* ── Primary: dark mahogany bg, cream text ── */
+.btn-primary {
+  background: var(--mahogany);
+  color: #FEFAF5;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+}
+.btn-primary:hover {
+  background: var(--mahogany-mid);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(59,26,20,0.28);
+}
+
+/* Dark mode primary: gold bg, very dark text — always readable */
+[data-theme="dark"] .btn-primary {
+  background: var(--gold);
+  color: #0D0804;
+  border-color: var(--gold);
+}
+[data-theme="dark"] .btn-primary:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.35);
+}
+
+/* ── Outline ── */
+.btn-outline {
+  background: transparent;
+  color: var(--mahogany);
+  border: 2px solid var(--mahogany);
+  border-radius: var(--radius);
+}
+.btn-outline:hover {
+  background: var(--mahogany);
+  color: #FEFAF5;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(59,26,20,0.2);
+}
+
+/* Dark mode outline: gold border/text, fills gold on hover */
+[data-theme="dark"] .btn-outline {
+  color: var(--gold-light);
+  border-color: var(--gold-light);
+}
+[data-theme="dark"] .btn-outline:hover {
+  background: var(--gold);
+  color: #0D0804;
+  border-color: var(--gold);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.3);
+}
+
+/* ── Gold ── */
+.btn-gold {
+  background: var(--gold);
+  color: #2A1208;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+.btn-gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(201,168,76,0.45);
+}
+
+/* Dark mode gold: same, always works */
+[data-theme="dark"] .btn-gold {
+  background: var(--gold);
+  color: #0D0804;
+}
+[data-theme="dark"] .btn-gold:hover {
+  background: var(--gold-light);
+  box-shadow: 0 12px 30px rgba(201,168,76,0.5);
+}
+
+/* Hero/CTA outline over dark backgrounds */
+.hero-outline-btn,
+.cta-outline {
+  color: rgba(255,255,255,0.92) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+}
+.hero-outline-btn:hover,
+.cta-outline:hover {
+  background: rgba(255,255,255,0.15) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.8) !important;
+}
+
+/* ── Divider ── */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+.ornament-divider span { color: var(--gold); font-size: 1rem; }
+
+/* ── Section tag ── */
+.section-tag {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.animate-fade-in { animation: fadeIn 0.6s ease forwards; }
+.animate-float   { animation: float 5s ease-in-out infinite; }
+
+/* ── Noise overlay ── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════
+   DARK MODE — variables
+══════════════════════════════════════════ */
+[data-theme="dark"] {
+  --cream: #1A1008;
+  --cream-dark: #221409;
+  --warm-white: #1C1007;
+  --text-dark: #EDE0CC;
+  --text-mid: #C4A882;
+  --text-light: #8A7060;
+  --shadow-soft: 0 4px 24px rgba(0,0,0,0.45);
+  --shadow-card: 0 8px 40px rgba(0,0,0,0.55);
+  --shadow-hover: 0 16px 56px rgba(0,0,0,0.65);
+  /* Keep mahogany/rose as-is — they are used contextually */
+}
+
+[data-theme="dark"] body {
+  background: #130C06;
+  color: var(--text-dark);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .container { max-width: 100%; }
+  .section { padding: 5rem 0; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 4rem 0; }
+  .container { padding: 0 1.5rem; }
+  h1 { font-size: clamp(2rem, 7vw, 3.5rem); }
+  h2 { font-size: clamp(1.6rem, 5vw, 2.4rem); }
+  .btn { padding: 0.8rem 1.8rem; font-size: 0.74rem; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 1rem; }
+  .section { padding: 3rem 0; }
+  h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+  h2 { font-size: clamp(1.4rem, 6vw, 2rem); }
+  .btn { padding: 0.75rem 1.4rem; font-size: 0.72rem; letter-spacing: 0.12em; }
+  .ornament-divider { margin: 1rem 0; }
+}
+
+@media (max-width: 360px) {
+  .container { padding: 0 0.875rem; }
+}
+
+@media (hover: none) {
+  .shine-card::after { display: none; }
+}
