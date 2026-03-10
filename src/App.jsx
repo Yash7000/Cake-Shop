@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import LoadingScreen from './components/LoadingScreen.jsx'
@@ -11,10 +11,19 @@ import About from './pages/About.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { useSmoothScroll } from './hooks/useSmoothScroll.js'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
 function AppInner() {
   useSmoothScroll()
   return (
     <>
+      <ScrollToTop />
       <ScrollProgress />
       <Navbar />
       <PageTransition>
